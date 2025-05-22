@@ -55,7 +55,7 @@ if uploaded_file:
         locked = df.query("Locked == 1")["Player"].tolist() if "Locked" in df.columns else []
 
         if opt_type.startswith("GL"):
-            results = generate_diverse_lineups(
+            results1 = generate_diverse_lineups(
                 df=df,
                 sport=sport,
                 num_lineups=num_lineups,
@@ -63,6 +63,14 @@ if uploaded_file:
                 stack_min={1: stack1, 2: stack2},
                 locked_players=locked
             )
+            results2 = optimize_lineups(
+                df=df,
+                x=stack1,
+                y=stack2,
+                num_lineups=num_lineups,
+                exp_diff=0.5
+            ) 
+            results = pd.concat([results1, results2], axis = 0).drop_duplicates([0,1,2,3,4,5,6,7]).sort_values("Projection", ascending = False)
         else:
             results = optimize_lineups(
                 df=df,
