@@ -149,8 +149,9 @@ def generate_diverse_lineups(df, sport, num_lineups, exposure_limit=0.5, stack_m
     results = pd.DataFrame(all_results)
     results["TotalProjection"] = total_proj
     results["TotalCredits"] = total_credits
+    results["OptType"] = "Opt2"
     top_projection = results["TotalProjection"].max()
-    results["ProjectionDiff(%)"] = ((top_projection - results["TotalProjection"]) / top_projection * 100).round(2)
+   # results["ProjectionDiff(%)"] = ((top_projection - results["TotalProjection"]) / top_projection * 100).round(2)
 
     return results
 
@@ -274,9 +275,10 @@ def optimize_lineups(df, x, y, num_lineups, exp_diff):
             lineup_list.append(sort_players(lineup))
 
         results = pd.DataFrame(lineup_list).assign(
-            Projection=[sum(selections[:, i] * projection) for i in range(num_lineups)],
-            Stdev = [statistics.variance(selections[:, i] * projection) for i in range(num_lineups)],
-            Credits=[sum(selections[:, i] * salary) for i in range(num_lineups)]
+            TotalProjection=[sum(selections[:, i] * projection) for i in range(num_lineups)],
+           # Stdev = [statistics.variance(selections[:, i] * projection) for i in range(num_lineups)],
+            TotalCredits=[sum(selections[:, i] * salary) for i in range(num_lineups)],
+            OptType = "Opt1"
         )
         print("Time Taken:", datetime.now(tz=ZoneInfo('Asia/Kolkata')) - start)
         print("\n")
