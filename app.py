@@ -70,7 +70,7 @@ if uploaded_file:
                 num_lineups=num_lineups,
                 exp_diff=0.5
             ) 
-            results = pd.concat([results1, results2], axis = 0).drop_duplicates([0,1,2,3,4,5,6,7]).sort_values("Projection", ascending = False)
+            results = pd.concat([results1, results2], axis = 0).drop_duplicates([0,1,2,3,4,5,6,7]).sort_values("TotalProjection", ascending = False)
         else:
             results = optimize_lineups(
                 df=df,
