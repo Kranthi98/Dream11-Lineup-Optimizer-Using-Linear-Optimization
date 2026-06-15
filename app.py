@@ -2,7 +2,7 @@
 """
 Created on Thu May 22 00:40:36 2025
 
-@author: SHIVA
+@author: KRANTHI
 """
 
 from optimizer_core import generate_diverse_lineups, optimize_lineups
